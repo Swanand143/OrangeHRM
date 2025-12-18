@@ -16,7 +16,7 @@ public class Dashboard {
 
 	@FindBy(xpath = "//a[text()='Logout']")
 	private WebElement logout;
-
+	
 	@FindBy(xpath = "//span[text()='Admin']")
 	private WebElement adminMenu;
 

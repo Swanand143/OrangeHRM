@@ -14,6 +14,9 @@ public class Leave {
 	@FindBy(xpath = "//span[text()='Leave']")
 	private WebElement leaveMenu;
 
+	@FindBy(xpath = "//h6[text()='Leave']")
+	private WebElement leaveHeader;
+
 	@FindBy(xpath = "//a[text()='Apply']")
 	private WebElement applyLeave;
 
@@ -23,8 +26,21 @@ public class Leave {
 	@FindBy(xpath = "//a[text()='Assign Leave']")
 	private WebElement assignLeave;
 
+	@FindBy(xpath = "//div[@class='oxd-layout-context']")
+	private WebElement leaveContainer;
+
+	@FindBy(xpath = "//span[@class='oxd-topbar-header-breadcrumb']")
+	private WebElement breadcrumb;
+
+	@FindBy(xpath = "//button[normalize-space()='Search']")
+	private WebElement searchButton;
+
 	public WebElement getLeaveMenu() {
 		return leaveMenu;
+	}
+
+	public WebElement getLeaveHeader() {
+		return leaveHeader;
 	}
 
 	public WebElement getApplyLeave() {
@@ -37,5 +53,17 @@ public class Leave {
 
 	public WebElement getAssignLeave() {
 		return assignLeave;
+	}
+
+	public WebElement getLeaveContainer() {
+		return leaveContainer;
+	}
+
+	public WebElement getBreadcrumb() {
+		return breadcrumb;
+	}
+
+	public WebElement getSearchButton() {
+		return searchButton;
 	}
 }

@@ -18,63 +18,88 @@ public class MyInfoTest extends MyInfoBase {
 
 	@Test
 	public void tc_01() {
-		boolean output = myInfo.getMyInfoMenu().isDisplayed();
-		assertTrue(output, "My Info menu not displayed And Defect is found");
+		myInfo.getMyInfoMenu().click();
+		String url = driver.getCurrentUrl();
+		String title = driver.getTitle();
+		boolean output = url.contains("viewPersonalDetails") && title.contains("OrangeHRM");
+		assertTrue(output, "My Info module not opened correctly And Defect is found");
 	}
 
 	@Test
 	public void tc_02() {
-		boolean output = myInfo.getSaveButton().isDisplayed();
-		assertTrue(output, "Save button not displayed And Defect is found");
+		String header = myInfo.getPersonalDetailsHeader().getText();
+		boolean headerVisible = header.equalsIgnoreCase("Personal Details");
+		boolean saveEnabled = myInfo.getSaveButton().isEnabled();
+		boolean output = headerVisible && saveEnabled;
+		assertTrue(output, "Personal Details page not loaded properly And Defect is found");
 	}
 
 	@Test
 	public void tc_03() {
-		boolean output = myInfo.getSaveButton().isEnabled();
-		assertTrue(output, "Save button is disabled And Defect is found");
+		boolean firstNameEnabled = myInfo.getFirstNameField().isEnabled();
+		boolean lastNameEnabled = myInfo.getLastNameField().isEnabled();
+		String url = driver.getCurrentUrl();
+		boolean output = firstNameEnabled && lastNameEnabled && url.contains("myInfo");
+		assertTrue(output, "Employee name fields not editable And Defect is found");
 	}
 
 	@Test
 	public void tc_04() {
-		boolean output = driver.getCurrentUrl().contains("viewPersonalDetails");
-		assertTrue(output, "My Info page URL mismatch And Defect is found");
+		myInfo.getFirstNameField().clear();
+		myInfo.getSaveButton().click();
+		boolean errorPresent = driver.getPageSource().contains("Required");
+		assertTrue(errorPresent, "Mandatory field validation missing And Defect is found");
 	}
 
 	@Test
 	public void tc_05() {
-		boolean output = driver.getTitle().contains("OrangeHRM");
-		assertTrue(output, "My Info page title incorrect And Defect is found");
+		myInfo.getFirstNameField().sendKeys("TestUser");
+		myInfo.getLastNameField().sendKeys("Automation");
+		myInfo.getSaveButton().click();
+		boolean successMsg = driver.getPageSource().contains("Successfully");
+		assertTrue(successMsg, "Profile update failed And Defect is found");
 	}
 
 	@Test
 	public void tc_06() {
-		boolean output = driver.getPageSource().contains("Personal Details");
-		assertTrue(output, "Personal Details section missing And Defect is found");
+		driver.navigate().refresh();
+		boolean urlValid = driver.getCurrentUrl().contains("myInfo");
+		boolean headerVisible = myInfo.getPersonalDetailsHeader().isDisplayed();
+		boolean output = urlValid && headerVisible;
+		assertTrue(output, "My Info page not stable after refresh And Defect is found");
 	}
 
 	@Test
 	public void tc_07() {
-		boolean output = driver.getPageSource().contains("Employee");
-		assertTrue(output, "Employee information missing And Defect is found");
+		myInfo.getUserDropdown().click();
+		boolean logoutVisible = myInfo.getLogout().isDisplayed();
+		String title = driver.getTitle();
+		boolean output = logoutVisible && title.contains("OrangeHRM");
+		assertTrue(output, "User dropdown options not loaded And Defect is found");
 	}
 
 	@Test
 	public void tc_08() {
-		myInfo.getSaveButton().click();
-		boolean output = driver.getPageSource().contains("Successfully");
-		assertTrue(output, "Save action failed And Defect is found");
-	}
+		myInfo.getUserDropdown().click();
+		myInfo.getLogout().click();
+		String url = driver.getCurrentUrl();
+		boolean output = url.contains("login");
+		assertTrue(output, "Logout from My Info module failed And Defect is found");
+	}		
 
 	@Test
-	public void tc_09() {
-		driver.navigate().refresh();
-		boolean output = driver.getCurrentUrl().contains("myInfo");
-		assertTrue(output, "My Info page refresh failed And Defect is found");
+	public void tc_09() throws Exception {
+		openMyInfoModule();
+		String pageSource = driver.getPageSource();
+		boolean output = pageSource.contains("Personal Details") && pageSource.contains("Employee");
+		assertTrue(output, "Employee personal information missing And Defect is found");
 	}
 
 	@Test
 	public void tc_10() {
-		boolean output = !driver.getCurrentUrl().contains("login");
-		assertTrue(output, "Unexpected logout from My Info module And Defect is found");
+		String title = driver.getTitle();
+		String url = driver.getCurrentUrl();
+		boolean output = title.contains("OrangeHRM") && !url.contains("login");
+		assertTrue(output, "Session lost while accessing My Info module And Defect is found");
 	}
 }

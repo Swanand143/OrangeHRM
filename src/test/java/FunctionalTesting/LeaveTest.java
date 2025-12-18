@@ -18,65 +18,87 @@ public class LeaveTest extends LeaveBase {
 
 	@Test
 	public void tc_01() {
-		boolean output = driver.getCurrentUrl().contains("leave");
-		assertTrue(output, "Leave module URL not loaded And Defect is found");
+		String header = leave.getLeaveHeader().getText();
+		String url = driver.getCurrentUrl();
+		boolean output = header.equalsIgnoreCase("Leave") && url.contains("leave");
+		assertTrue(output, "Leave module not loaded correctly And Defect is found");
 	}
 
 	@Test
 	public void tc_02() {
-		leave.getApplyLeave().click();
-		boolean output = driver.getCurrentUrl().contains("applyLeave");
-		assertTrue(output, "Apply Leave navigation failed And Defect is found");
+		boolean containerVisible = leave.getLeaveContainer().isDisplayed();
+		String title = driver.getTitle();
+		boolean output = containerVisible && title.contains("OrangeHRM");
+		assertTrue(output, "Leave page UI not rendered properly And Defect is found");
 	}
 
 	@Test
 	public void tc_03() {
-		leave.getLeaveList().click();
-		boolean output = driver.getCurrentUrl().contains("viewLeaveList");
-		assertTrue(output, "Leave List navigation failed And Defect is found");
+		leave.getApplyLeave().click();
+		String url = driver.getCurrentUrl();
+		boolean breadcrumbUpdated = leave.getBreadcrumb().getText().contains("Apply");
+		boolean output = url.contains("applyLeave") && breadcrumbUpdated;
+		assertTrue(output, "Apply Leave navigation failed And Defect is found");
 	}
 
 	@Test
 	public void tc_04() {
-		leave.getAssignLeave().click();
-		boolean output = driver.getCurrentUrl().contains("assignLeave");
-		assertTrue(output, "Assign Leave navigation failed And Defect is found");
+		leave.getLeaveList().click();
+		String breadcrumb = leave.getBreadcrumb().getText();
+		boolean searchEnabled = leave.getSearchButton().isEnabled();
+		boolean output = breadcrumb.contains("Leave List") && searchEnabled;
+		assertTrue(output, "Leave List page not functional And Defect is found");
 	}
 
 	@Test
 	public void tc_05() {
-		boolean output = driver.getTitle().equalsIgnoreCase("OrangeHRM");
-		assertTrue(output, "Leave page title incorrect And Defect is found");
+		leave.getAssignLeave().click();
+		String url = driver.getCurrentUrl();
+		String header = leave.getLeaveHeader().getText();
+		boolean output = url.contains("assignLeave") && header.equalsIgnoreCase("Leave");
+		assertTrue(output, "Assign Leave page not opened correctly And Defect is found");
 	}
 
 	@Test
 	public void tc_06() {
-		boolean output = driver.getPageSource().contains("Apply");
-		assertTrue(output, "Apply Leave text missing And Defect is found");
+		leave.getLeaveList().click();
+		leave.getSearchButton().click();
+		String pageSource = driver.getPageSource();
+		boolean output = pageSource.contains("Records") || pageSource.contains("No Records");
+		assertTrue(output, "Leave search result not loaded And Defect is found");
 	}
 
 	@Test
 	public void tc_07() {
-		boolean output = driver.getPageSource().contains("Leave List");
-		assertTrue(output, "Leave List text missing And Defect is found");
+		leave.getApplyLeave().click();
+		String title = driver.getTitle();
+		String url = driver.getCurrentUrl();
+		boolean output = title.contains("OrangeHRM") && url.contains("applyLeave");
+		assertTrue(output, "Apply Leave page validation failed And Defect is found");
 	}
 
 	@Test
 	public void tc_08() {
-		boolean output = driver.getPageSource().contains("Assign Leave");
-		assertTrue(output, "Assign Leave text missing And Defect is found");
+		leave.getLeaveMenu().click();
+		String breadcrumb = leave.getBreadcrumb().getText();
+		boolean containerVisible = leave.getLeaveContainer().isDisplayed();
+		boolean output = breadcrumb.contains("Leave") && containerVisible;
+		assertTrue(output, "Leave module reload failed And Defect is found");
 	}
 
 	@Test
 	public void tc_09() {
-		driver.navigate().refresh();
-		boolean output = driver.getCurrentUrl().contains("leave");
-		assertTrue(output, "Leave page refresh failed And Defect is found");
+		leave.getAssignLeave().click();
+		String pageSource = driver.getPageSource();
+		boolean output = pageSource.contains("Employee") || pageSource.contains("Assign");
+		assertTrue(output, "Assign Leave form not loaded And Defect is found");
 	}
 
 	@Test
 	public void tc_10() {
-		boolean output = !driver.getCurrentUrl().contains("login");
-		assertTrue(output, "Unexpected logout from Leave module And Defect is found");
+		String title = driver.getTitle();
+		String url = driver.getCurrentUrl();
+		boolean output = title.contains("OrangeHRM") && url.contains("leave");
+		assertTrue(output, "Leave module page integrity failed And Defect is found");
 	}
 }

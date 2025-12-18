@@ -40,20 +40,30 @@ public class LoginTest extends LoginAction {
 	@Test
 	public void tc_003() {
 		Login log = new Login(driver);
-		assertTrue(log.getPassword().isDisplayed(), "password field not displayed");
+		boolean passwordVisible = log.getPassword().isDisplayed();
+		String placeholder = log.getPasswordPlaceholder().getAttribute("placeholder");
+		boolean output = passwordVisible && placeholder.equalsIgnoreCase("Password");
+		assertTrue(output, "Password field or placeholder incorrect And Defect is found");
 	}
 
 	@Test
-	public void tc_004() {
+	public void tc_004() {		
 		Login log = new Login(driver);
-		assertTrue(log.getLoginButton().isEnabled(), "login button disabled");
+		boolean buttonEnabled = log.getLoginButton().isEnabled();
+		String buttonText = log.getLoginButton().getText();
+		boolean output = buttonEnabled && buttonText.equalsIgnoreCase("Login");
+		assertTrue(output, "Login button state or text incorrect And Defect is found");
 	}
 
 	@Test
 	public void tc_005() {
 		Login log = new Login(driver);
-		assertTrue(log.getForgotPassword().isDisplayed(), "forgot password link missing");
+		boolean linkVisible = log.getForgotPassword().isDisplayed();
+		String linkText = log.getForgotPassword().getText();
+		boolean output = linkVisible && linkText.contains("Forgot");
+		assertTrue(output, "Forgot password link incorrect And Defect is found");
 	}
+
 
 	@Test
 	public void tc_006() {
@@ -100,6 +110,9 @@ public class LoginTest extends LoginAction {
 	@Test
 	public void tc_010() {
 		Login log = new Login(driver);
-		assertTrue(log.getLogo().isDisplayed(), "logo not displayed");
+		boolean logoVisible = log.getLogo().isDisplayed();
+		String title = driver.getTitle();
+		boolean output = logoVisible && title.contains("OrangeHRM");
+		assertTrue(output, "Login page branding not loaded properly And Defect is found");
 	}
 }

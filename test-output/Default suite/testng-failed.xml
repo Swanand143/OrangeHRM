@@ -3,16 +3,15 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="FunctionalTesting.LoginTest">
+      <class name="FunctionalTesting.PimTest">
         <methods>
-          <include name="tc_007"/>
+          <include name="init"/>
           <include name="setUp"/>
+          <include name="tc_04"/>
           <include name="tearDown"/>
-          <include name="tc_006"/>
-          <include name="tc_002"/>
-          <include name="tc_009"/>
+          <include name="tc_05"/>
         </methods>
-      </class> <!-- FunctionalTesting.LoginTest -->
+      </class> <!-- FunctionalTesting.PimTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
