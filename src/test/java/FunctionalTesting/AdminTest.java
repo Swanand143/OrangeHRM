@@ -20,14 +20,16 @@ public class AdminTest extends AdminBase {
 		openAdminModule();
 		admin = new Admin(driver);
 	}
-
+	
+	// Verifies that the Admin page is opened successfully by checking the page header text.
 	@Test
 	public void tc_01() {
 		String header = admin.getAdminHeader().getText();
 		boolean output = header.equalsIgnoreCase("Admin");
 		assertTrue(output, "Admin page header not loaded And Defect is found");
 	}
-
+	
+	// Searches for a valid admin username and confirms that the result table is displayed.
 	@Test
 	public void tc_02() throws Exception {
 		String username = ReadFromExcel.readExcel(1, 0, "admin");
@@ -36,7 +38,8 @@ public class AdminTest extends AdminBase {
 		boolean output = admin.getResultTable().isDisplayed();
 		assertTrue(output, "Search result not displayed And Defect is found");
 	}
-
+	
+	// Searches with an invalid username and validates that the system shows “No Records Found”.	
 	@Test
 	public void tc_03() throws Exception {
 		String username = ReadFromExcel.readExcel(2, 0, "admin");
@@ -46,14 +49,16 @@ public class AdminTest extends AdminBase {
 		boolean output = text.contains("No Records Found");
 		assertTrue(output, "Invalid user search not handled And Defect is found");
 	}
-
+	
+	// Clicks on the Add button and checks whether the Add User page is opened properly.	
 	@Test
 	public void tc_04() {
 		admin.getAddButton().click();
 		boolean output = admin.getSaveButton().isDisplayed();
 		assertTrue(output, "Add user page not opened And Defect is found");
 	}
-
+	
+	// Attempts to save a new admin user without entering mandatory fields and verifies validation messages.
 	@Test
 	public void tc_05() {
 		admin.getAddButton().click();
@@ -62,7 +67,8 @@ public class AdminTest extends AdminBase {
 		boolean output = pageSource.contains("Required");
 		assertTrue(output, "Mandatory field validation missing And Defect is found");
 	}
-
+	
+	// Enters data in the username field, clicks Reset, and ensures the field is cleared.
 	@Test
 	public void tc_06() throws Exception {
 		admin.getUsernameField().sendKeys("Admin");
@@ -71,7 +77,8 @@ public class AdminTest extends AdminBase {
 		boolean output = value.isEmpty();
 		assertTrue(output, "Reset button not clearing data And Defect is found");
 	}
-
+    
+	// Performs a search without filters and verifies that default admin records are loaded.
 	@Test
 	public void tc_07() {
 		admin.getSearchButton().click();
@@ -80,7 +87,8 @@ public class AdminTest extends AdminBase {
 		boolean output = tableVisible && recordText.length() > 0;
 		assertTrue(output, "Default admin records not loaded And Defect is found");
 	}
-
+	
+	// Confirms that the Admin module is correctly loaded by validating both header text and URL.
 	@Test
 	public void tc_08() {
 		String header = admin.getAdminHeader().getText();
@@ -88,8 +96,9 @@ public class AdminTest extends AdminBase {
 		boolean output = header.equalsIgnoreCase("Admin") && url.contains("admin");
 		assertTrue(output, "Admin module page not loaded correctly And Defect is found");
 	}
-
-	@Test
+	
+	// Confirms that the Admin module is correctly loaded by validating both header text and URL.
+	@Test	
 	public void tc_09() {
 		admin.getAddButton().click();
 		boolean saveVisible = admin.getSaveButton().isDisplayed();
@@ -97,7 +106,8 @@ public class AdminTest extends AdminBase {
 		boolean output = saveVisible && url.contains("save");
 		assertTrue(output, "Add user page not opened correctly And Defect is found");
 	}
-
+	
+	// Verifies that Search and Reset buttons are enabled and ready for user interaction.
 	@Test
 	public void tc_10() {
 		boolean searchEnabled = admin.getSearchButton().isEnabled();

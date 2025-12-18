@@ -16,7 +16,8 @@ public class PimTest extends PimBase {
 	public void init() throws Exception {
 		openPimModule();
 	}
-
+	
+	// Navigates to the PIM module and verifies that the correct page is loaded using URL and title validation.
 	@Test
 	public void tc_01() {
 		pim.getPimMenu().click();
@@ -25,7 +26,8 @@ public class PimTest extends PimBase {
 		boolean output = url.contains("pim") && title.contains("OrangeHRM");
 		assertTrue(output, "PIM module not loaded correctly And Defect is found");
 	}
-
+	
+	// Opens the Add Employee page and checks whether the page header and First Name field are available.
 	@Test
 	public void tc_02() {
 		pim.getAddEmployeeButton().click();
@@ -34,7 +36,8 @@ public class PimTest extends PimBase {
 		boolean output = header.equals("Add Employee") && firstNameEnabled;
 		assertTrue(output, "Add Employee page not opened properly And Defect is found");
 	}
-
+	
+	// Attempts to save employee details without entering data to verify mandatory field validation.
 	@Test
 	public void tc_03() {
 		pim.getAddEmployeeButton().click();
@@ -42,7 +45,8 @@ public class PimTest extends PimBase {
 		boolean validationMsg = driver.getPageSource().contains("Required");
 		assertTrue(validationMsg, "Mandatory field validation missing And Defect is found");
 	}
-
+	
+	// Creates a new employee using valid data from Excel and verifies successful navigation to employee details page.
 	@Test
 	public void tc_04() throws Exception {
 		pim.getAddEmployeeButton().click();
@@ -52,14 +56,16 @@ public class PimTest extends PimBase {
 		boolean output = driver.getCurrentUrl().contains("viewPersonalDetails");
 		assertTrue(output, "Employee creation failed And Defect is found");
 	}
-
+	
+	// Confirms that the Employee Information page is displayed after employee creation.
 	@Test
 	public void tc_05() {
 		String header = pim.getEmployeeInfoHeader().getText();
 		boolean output = header.equalsIgnoreCase("Employee Information");
 		assertTrue(output, "Employee information page not loaded And Defect is found");
 	}
-
+	
+	// Opens the Employee List page and validates that the employee table is displayed correctly.
 	@Test
 	public void tc_06() {
 		pim.getEmployeeList().click();
@@ -68,7 +74,8 @@ public class PimTest extends PimBase {
 		boolean output = tableVisible && urlCorrect;
 		assertTrue(output, "Employee list not displayed correctly And Defect is found");
 	}
-
+	
+	// Refreshes the PIM page and verifies that the module remains stable after reload.
 	@Test
 	public void tc_07() {
 		driver.navigate().refresh();
@@ -77,7 +84,8 @@ public class PimTest extends PimBase {
 		boolean output = urlValid && menuVisible;
 		assertTrue(output, "PIM page unstable after refresh And Defect is found");
 	}
-
+	
+	// Validates last name field by attempting to save employee details with missing mandatory data.
 	@Test
 	public void tc_08() {
 		pim.getAddEmployeeButton().click();
@@ -87,14 +95,16 @@ public class PimTest extends PimBase {
 		boolean output = driver.getPageSource().contains("Required");
 		assertTrue(output, "Last name validation missing And Defect is found");
 	}
-
+	
+	// Verifies that PIM-related content is present on the page, ensuring correct module context.
 	@Test
 	public void tc_09() {
 		String pageSource = driver.getPageSource();
 		boolean output = pageSource.contains("Employee") && pageSource.contains("PIM");
 		assertTrue(output, "PIM related content missing And Defect is found");
 	}
-
+	
+	// Confirms that the user session remains active while working in the PIM module.
 	@Test
 	public void tc_10() {
 		String url = driver.getCurrentUrl();

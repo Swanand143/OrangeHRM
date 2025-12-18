@@ -1,21 +1,22 @@
 package FunctionalTesting;
-
+		
 import static org.testng.Assert.assertTrue;
-
+		
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
+		
 import com.crm.BaseClass.MyInfoBase;
-
+		
 @Listeners(com.crm.Listeners.ExtentReportListeners.class)
 public class MyInfoTest extends MyInfoBase {
-
+		
 	@BeforeMethod
 	public void init() throws Exception {
 		openMyInfoModule();
 	}
-
+			
+	// Navigates to the My Info module and verifies the correct page is opened with valid URL and title.	
 	@Test
 	public void tc_01() {
 		myInfo.getMyInfoMenu().click();
@@ -24,7 +25,8 @@ public class MyInfoTest extends MyInfoBase {
 		boolean output = url.contains("viewPersonalDetails") && title.contains("OrangeHRM");
 		assertTrue(output, "My Info module not opened correctly And Defect is found");
 	}
-
+	
+	// Validates that the Personal Details header is displayed and the Save button is enabled.
 	@Test
 	public void tc_02() {
 		String header = myInfo.getPersonalDetailsHeader().getText();
@@ -33,7 +35,8 @@ public class MyInfoTest extends MyInfoBase {
 		boolean output = headerVisible && saveEnabled;
 		assertTrue(output, "Personal Details page not loaded properly And Defect is found");
 	}
-
+	
+	// Checks whether First Name and Last Name fields are editable on the My Info page.
 	@Test
 	public void tc_03() {
 		boolean firstNameEnabled = myInfo.getFirstNameField().isEnabled();
@@ -42,7 +45,8 @@ public class MyInfoTest extends MyInfoBase {
 		boolean output = firstNameEnabled && lastNameEnabled && url.contains("myInfo");
 		assertTrue(output, "Employee name fields not editable And Defect is found");
 	}
-
+	
+	// Verifies mandatory field validation by clearing required fields and attempting to save.
 	@Test
 	public void tc_04() {
 		myInfo.getFirstNameField().clear();
@@ -50,7 +54,8 @@ public class MyInfoTest extends MyInfoBase {
 		boolean errorPresent = driver.getPageSource().contains("Required");
 		assertTrue(errorPresent, "Mandatory field validation missing And Defect is found");
 	}
-
+		
+	// Updates employee personal details and verifies that the success message is displayed.
 	@Test
 	public void tc_05() {
 		myInfo.getFirstNameField().sendKeys("TestUser");
@@ -59,7 +64,8 @@ public class MyInfoTest extends MyInfoBase {
 		boolean successMsg = driver.getPageSource().contains("Successfully");
 		assertTrue(successMsg, "Profile update failed And Defect is found");
 	}
-
+		
+	// Refreshes the page and ensures the My Info module remains stable after reload.
 	@Test
 	public void tc_06() {
 		driver.navigate().refresh();
@@ -68,7 +74,8 @@ public class MyInfoTest extends MyInfoBase {
 		boolean output = urlValid && headerVisible;
 		assertTrue(output, "My Info page not stable after refresh And Defect is found");
 	}
-
+	
+	// Opens the user dropdown and verifies logout option visibility without breaking the session.
 	@Test
 	public void tc_07() {
 		myInfo.getUserDropdown().click();
@@ -77,7 +84,8 @@ public class MyInfoTest extends MyInfoBase {
 		boolean output = logoutVisible && title.contains("OrangeHRM");
 		assertTrue(output, "User dropdown options not loaded And Defect is found");
 	}
-
+	
+	// Performs logout from the My Info module and validates redirection to the login page.
 	@Test
 	public void tc_08() {
 		myInfo.getUserDropdown().click();
@@ -86,7 +94,8 @@ public class MyInfoTest extends MyInfoBase {
 		boolean output = url.contains("login");
 		assertTrue(output, "Logout from My Info module failed And Defect is found");
 	}		
-
+	
+	// Reloads My Info module and verifies employee personal information is present on the page.
 	@Test
 	public void tc_09() throws Exception {
 		openMyInfoModule();
@@ -94,7 +103,8 @@ public class MyInfoTest extends MyInfoBase {
 		boolean output = pageSource.contains("Personal Details") && pageSource.contains("Employee");
 		assertTrue(output, "Employee personal information missing And Defect is found");
 	}
-
+	
+	// Confirms session is active by validating page title and ensuring user is not redirected to login.
 	@Test
 	public void tc_10() {
 		String title = driver.getTitle();
