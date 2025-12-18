@@ -1,6 +1,7 @@
 package FunctionalTesting;
 
-import org.testng.Assert;
+import static org.testng.Assert.assertTrue;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -17,55 +18,65 @@ public class LeaveTest extends LeaveBase {
 
 	@Test
 	public void tc_01() {
-		Assert.assertTrue(leave.getLeaveMenu().isDisplayed());
+		boolean output = driver.getCurrentUrl().contains("leave");
+		assertTrue(output, "Leave module URL not loaded And Defect is found");
 	}
 
 	@Test
 	public void tc_02() {
-		Assert.assertTrue(leave.getApplyLeave().isDisplayed());
+		leave.getApplyLeave().click();
+		boolean output = driver.getCurrentUrl().contains("applyLeave");
+		assertTrue(output, "Apply Leave navigation failed And Defect is found");
 	}
 
 	@Test
 	public void tc_03() {
-		leave.getApplyLeave().click();
-		Assert.assertTrue(driver.getCurrentUrl().contains("applyLeave"));
+		leave.getLeaveList().click();
+		boolean output = driver.getCurrentUrl().contains("viewLeaveList");
+		assertTrue(output, "Leave List navigation failed And Defect is found");
 	}
 
 	@Test
 	public void tc_04() {
-		Assert.assertTrue(leave.getLeaveList().isDisplayed());
+		leave.getAssignLeave().click();
+		boolean output = driver.getCurrentUrl().contains("assignLeave");
+		assertTrue(output, "Assign Leave navigation failed And Defect is found");
 	}
 
 	@Test
 	public void tc_05() {
-		leave.getLeaveList().click();
-		Assert.assertTrue(driver.getCurrentUrl().contains("viewLeaveList"));
+		boolean output = driver.getTitle().equalsIgnoreCase("OrangeHRM");
+		assertTrue(output, "Leave page title incorrect And Defect is found");
 	}
 
 	@Test
 	public void tc_06() {
-		Assert.assertTrue(leave.getAssignLeave().isDisplayed());
+		boolean output = driver.getPageSource().contains("Apply");
+		assertTrue(output, "Apply Leave text missing And Defect is found");
 	}
 
 	@Test
 	public void tc_07() {
-		leave.getAssignLeave().click();
-		Assert.assertTrue(driver.getCurrentUrl().contains("assignLeave"));
+		boolean output = driver.getPageSource().contains("Leave List");
+		assertTrue(output, "Leave List text missing And Defect is found");
 	}
 
 	@Test
 	public void tc_08() {
-		Assert.assertTrue(driver.getTitle().contains("OrangeHRM"));
+		boolean output = driver.getPageSource().contains("Assign Leave");
+		assertTrue(output, "Assign Leave text missing And Defect is found");
 	}
 
 	@Test
 	public void tc_09() {
-		leave.getLeaveMenu().click();
-		Assert.assertTrue(driver.getCurrentUrl().contains("leave"));
+		driver.navigate().refresh();
+		boolean output = driver.getCurrentUrl().contains("leave");
+		assertTrue(output, "Leave page refresh failed And Defect is found");
 	}
 
 	@Test
 	public void tc_10() {
-		Assert.assertTrue(driver.getPageSource().contains("Leave"));
+		boolean output = !driver.getCurrentUrl().contains("login");
+		assertTrue(output, "Unexpected logout from Leave module And Defect is found");
 	}
 }

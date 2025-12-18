@@ -1,6 +1,7 @@
 package IntegrationTesting;
 
-import org.testng.Assert;
+import static org.testng.Assert.assertTrue;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -17,6 +18,7 @@ public class DashboardMyInfoTest extends MyInfoBase {
 
 	@Test
 	public void tc_01() {
-		Assert.assertTrue(driver.getCurrentUrl().contains("myInfo"));
+		boolean output = driver.getCurrentUrl().contains("myInfo");
+		assertTrue(output, "Dashboard to MyInfo navigation failed And Defect is found");
 	}
 }

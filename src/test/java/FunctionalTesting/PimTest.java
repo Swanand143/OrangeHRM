@@ -1,6 +1,7 @@
 package FunctionalTesting;
 
-import org.testng.Assert;
+import static org.testng.Assert.assertTrue;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -18,25 +19,28 @@ public class PimTest extends PimBase {
 
 	@Test
 	public void tc_01() {
-		Assert.assertTrue(pim.getAddEmployeeButton().isDisplayed());
+		boolean output = pim.getAddEmployeeButton().isDisplayed();
+		assertTrue(output, "Add Employee button not displayed And Defect is found");
 	}
 
 	@Test
 	public void tc_02() {
 		pim.getAddEmployeeButton().click();
-		Assert.assertTrue(pim.getFirstName().isDisplayed());
+		boolean output = pim.getFirstName().isDisplayed();
+		assertTrue(output, "First Name field not displayed And Defect is found");
 	}
 
 	@Test
 	public void tc_03() {
 		pim.getAddEmployeeButton().click();
-		Assert.assertTrue(pim.getLastName().isDisplayed());
+		boolean output = pim.getSaveButton().isEnabled();
+		assertTrue(output, "Save button is disabled And Defect is found");
 	}
 
 	@Test
 	public void tc_04() {
-		pim.getAddEmployeeButton().click();
-		Assert.assertTrue(pim.getSaveButton().isEnabled());
+		boolean output = driver.getCurrentUrl().contains("pim");
+		assertTrue(output, "PIM module URL not loaded And Defect is found");
 	}
 
 	@Test
@@ -45,33 +49,39 @@ public class PimTest extends PimBase {
 		pim.getFirstName().sendKeys(ReadFromExcel.readExcel(1, 0, "pim"));
 		pim.getLastName().sendKeys(ReadFromExcel.readExcel(1, 1, "pim"));
 		pim.getSaveButton().click();
-		Assert.assertTrue(driver.getCurrentUrl().contains("viewPersonalDetails"));
+		boolean output = driver.getCurrentUrl().contains("viewPersonalDetails");
+		assertTrue(output, "Employee creation failed And Defect is found");
 	}
 
 	@Test
 	public void tc_06() {
-		Assert.assertTrue(pim.getEmployeeList().isDisplayed());
+		boolean output = driver.getPageSource().contains("Employee List");
+		assertTrue(output, "Employee List text not found And Defect is found");
 	}
 
 	@Test
 	public void tc_07() {
 		pim.getEmployeeList().click();
-		Assert.assertTrue(driver.getCurrentUrl().contains("viewEmployeeList"));
+		boolean output = driver.getCurrentUrl().contains("viewEmployeeList");
+		assertTrue(output, "Employee List page not opened And Defect is found");
 	}
 
 	@Test
 	public void tc_08() {
-		Assert.assertTrue(pim.getPimMenu().isDisplayed());
+		driver.navigate().refresh();
+		boolean output = driver.getCurrentUrl().contains("pim");
+		assertTrue(output, "PIM page refresh failed And Defect is found");
 	}
 
 	@Test
 	public void tc_09() {
-		pim.getPimMenu().click();
-		Assert.assertTrue(driver.getCurrentUrl().contains("pim"));
+		boolean output = driver.getTitle().contains("OrangeHRM");
+		assertTrue(output, "PIM page title mismatch And Defect is found");
 	}
 
 	@Test
 	public void tc_10() {
-		Assert.assertTrue(driver.getTitle().contains("OrangeHRM"));
+		boolean output = !driver.getCurrentUrl().contains("login");
+		assertTrue(output, "Unexpected logout from PIM module And Defect is found");
 	}
 }

@@ -29,6 +29,15 @@ public class Dashboard {
 	@FindBy(xpath = "//span[text()='My Info']")
 	private WebElement myInfoMenu;
 
+	@FindBy(xpath = "//h6[text()='Dashboard']")
+	private WebElement dashboardHeader;
+
+	@FindBy(xpath = "//span[@class='oxd-topbar-header-breadcrumb']")
+	private WebElement breadcrumb;
+
+	@FindBy(xpath = "//div[contains(@class,'oxd-layout-context')]")
+	private WebElement dashboardContainer;
+
 	public WebElement getUserdropdown_icon() {
 		return userDropdownIcon;
 	}
@@ -51,5 +60,17 @@ public class Dashboard {
 
 	public WebElement getMyInfoMenu() {
 		return myInfoMenu;
+	}
+
+	public WebElement getDashboardHeader() {
+		return dashboardHeader;
+	}
+
+	public WebElement getBreadcrumb() {
+		return breadcrumb;
+	}
+
+	public WebElement getDashboardContainer() {
+		return dashboardContainer;
 	}
 }

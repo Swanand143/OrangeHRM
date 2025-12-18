@@ -1,6 +1,7 @@
 package FunctionalTesting;
 
-import org.testng.Assert;
+import static org.testng.Assert.assertTrue;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -17,53 +18,63 @@ public class MyInfoTest extends MyInfoBase {
 
 	@Test
 	public void tc_01() {
-		Assert.assertTrue(myInfo.getMyInfoMenu().isDisplayed());
+		boolean output = myInfo.getMyInfoMenu().isDisplayed();
+		assertTrue(output, "My Info menu not displayed And Defect is found");
 	}
 
 	@Test
 	public void tc_02() {
-		Assert.assertTrue(myInfo.getSaveButton().isDisplayed());
+		boolean output = myInfo.getSaveButton().isDisplayed();
+		assertTrue(output, "Save button not displayed And Defect is found");
 	}
 
 	@Test
 	public void tc_03() {
-		Assert.assertTrue(myInfo.getSaveButton().isEnabled());
+		boolean output = myInfo.getSaveButton().isEnabled();
+		assertTrue(output, "Save button is disabled And Defect is found");
 	}
 
 	@Test
 	public void tc_04() {
-		myInfo.getMyInfoMenu().click();
-		Assert.assertTrue(driver.getCurrentUrl().contains("viewPersonalDetails"));
+		boolean output = driver.getCurrentUrl().contains("viewPersonalDetails");
+		assertTrue(output, "My Info page URL mismatch And Defect is found");
 	}
 
 	@Test
 	public void tc_05() {
-		Assert.assertTrue(driver.getTitle().contains("OrangeHRM"));
+		boolean output = driver.getTitle().contains("OrangeHRM");
+		assertTrue(output, "My Info page title incorrect And Defect is found");
 	}
 
 	@Test
 	public void tc_06() {
-		Assert.assertTrue(driver.getPageSource().contains("Personal Details"));
+		boolean output = driver.getPageSource().contains("Personal Details");
+		assertTrue(output, "Personal Details section missing And Defect is found");
 	}
 
 	@Test
 	public void tc_07() {
-		Assert.assertTrue(driver.getPageSource().contains("Employee"));
+		boolean output = driver.getPageSource().contains("Employee");
+		assertTrue(output, "Employee information missing And Defect is found");
 	}
 
 	@Test
 	public void tc_08() {
 		myInfo.getSaveButton().click();
-		Assert.assertTrue(driver.getPageSource().contains("Successfully"));
+		boolean output = driver.getPageSource().contains("Successfully");
+		assertTrue(output, "Save action failed And Defect is found");
 	}
 
 	@Test
 	public void tc_09() {
-		Assert.assertTrue(myInfo.getMyInfoMenu().isEnabled());
+		driver.navigate().refresh();
+		boolean output = driver.getCurrentUrl().contains("myInfo");
+		assertTrue(output, "My Info page refresh failed And Defect is found");
 	}
 
 	@Test
 	public void tc_10() {
-		Assert.assertTrue(driver.getCurrentUrl().contains("myInfo"));
+		boolean output = !driver.getCurrentUrl().contains("login");
+		assertTrue(output, "Unexpected logout from My Info module And Defect is found");
 	}
 }

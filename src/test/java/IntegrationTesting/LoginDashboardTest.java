@@ -1,6 +1,7 @@
 package IntegrationTesting;
 
-import org.testng.Assert;
+import static org.testng.Assert.assertTrue;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -17,6 +18,7 @@ public class LoginDashboardTest extends DashboardBase {
 
 	@Test
 	public void tc_01() {
-		Assert.assertTrue(dash.getAdminMenu().isDisplayed());
+		boolean output = dash.getAdminMenu().isDisplayed();
+		assertTrue(output, "Login to Dashboard failed And Defect is found");
 	}
 }

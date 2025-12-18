@@ -14,6 +14,9 @@ public class Admin {
 	@FindBy(xpath = "//span[text()='Admin']")
 	private WebElement adminMenu;
 
+	@FindBy(xpath = "//h6[text()='Admin']")
+	private WebElement adminHeader;
+
 	@FindBy(xpath = "//button[normalize-space()='Add']")
 	private WebElement addButton;
 
@@ -29,8 +32,18 @@ public class Admin {
 	@FindBy(xpath = "//button[normalize-space()='Reset']")
 	private WebElement resetButton;
 
+	@FindBy(xpath = "//div[@class='oxd-table-body']")
+	private WebElement resultTable;
+
+	@FindBy(xpath = "//span[@class='oxd-text oxd-text--span']")
+	private WebElement recordCountText;
+
 	public WebElement getAdminMenu() {
 		return adminMenu;
+	}
+
+	public WebElement getAdminHeader() {
+		return adminHeader;
 	}
 
 	public WebElement getAddButton() {
@@ -51,5 +64,13 @@ public class Admin {
 
 	public WebElement getResetButton() {
 		return resetButton;
+	}
+
+	public WebElement getResultTable() {
+		return resultTable;
+	}
+
+	public WebElement getRecordCountText() {
+		return recordCountText;
 	}
 }

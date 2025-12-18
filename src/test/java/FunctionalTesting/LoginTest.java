@@ -33,8 +33,7 @@ public class LoginTest extends LoginAction {
 		log.getPassword().sendKeys(wrongPass);
 		log.getLoginButton().click();
 
-		List<WebElement> errorBox =
-				driver.findElements(By.xpath("//div[contains(@class,'oxd-alert-content')]"));
+		List<WebElement> errorBox = driver.findElements(By.xpath("//div[contains(@class,'oxd-alert-content')]"));
 		assertFalse(errorBox.isEmpty(), "login is successful defect is found");
 	}
 

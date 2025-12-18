@@ -3,14 +3,16 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="IntegrationTesting.DashboardMyInfoTest">
+      <class name="FunctionalTesting.LoginTest">
         <methods>
+          <include name="tc_007"/>
           <include name="setUp"/>
           <include name="tearDown"/>
-          <include name="tc_01"/>
-          <include name="init"/>
+          <include name="tc_006"/>
+          <include name="tc_002"/>
+          <include name="tc_009"/>
         </methods>
-      </class> <!-- IntegrationTesting.DashboardMyInfoTest -->
+      </class> <!-- FunctionalTesting.LoginTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
